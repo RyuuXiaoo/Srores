@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Okegaming — Web Store</title>
+
+  <!-- Font & Icons (sama seperti tema) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+  <style>
+    /* ======= Token & palet diadopsi dari tema ======= */
+    :root{
+      --bg:#0b1020;
+      --bg-2:#0d1328;
+      --card:#0f1733aa;
+      --text:#e8ecff;
+      --muted:#a6b0d6;
+      --brand:#7a6cff;
+      --brand-2:#00e7ff;
+      --ring:#b7b1ff55;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans";
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #1c2042 10%, transparent 40%),
+                  radial-gradient(900px 500px at 110% 10%, #0e385a 10%, transparent 40%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      background-attachment:fixed;
+    }
+    .container{max-width:1000px;margin:0 auto;padding:20px 16px 48px}
+
+    /* ======= Header ======= */
+    .appbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(135deg, rgba(15,20,50,.9), rgba(10,16,40,.9));
+      border-bottom:1px solid #253066;
+    }
+    .appbar-inner{
+      max-width:1000px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:12px;
+    }
+    .back{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid #2b356d;background:#0e1431;cursor:pointer}
+    .brand{font-weight:700;letter-spacing:.3px}
+    .spacer{flex:1}
+    .home{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid #2b356d;background:#0e1431}
+    /* ======= Banner ======= */
+    .banner{
+      position:relative; border:1px solid #263068; border-radius:calc(var(--radius) + 6px);
+      background:linear-gradient(135deg, #121a3b 0%, #0e1431 100%); overflow:hidden; padding:18px; box-shadow:var(--shadow);
+      margin:16px 0 18px;
+    }
+    .banner h1{margin:0 0 4px;font-size:22px}
+    .banner p{margin:0;color:var(--muted);font-size:13px}
+
+    /* ======= Search & Tabs ======= */
+    .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0 14px}
+    .search{
+      position:relative; flex:1; min-width:220px;
+    }
+    .search input{
+      width:100%; padding:12px 40px 12px 40px; border-radius:999px; background:#0c1a3a; color:#cfd6ff;
+      border:1px solid #3b47a6; outline:none; box-shadow:0 8px 30px rgba(0,20,80,.2);
+    }
+    .search i{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#9fb0ff}
+    .viewbtn{display:flex; gap:8px}
+    .viewbtn button{
+      width:40px;height:40px;border-radius:12px;border:1px solid #2b356d;background:#0e1431;color:#cfd6ff;cursor:pointer
+    }
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      background:#0c1a3a; color:#cfd6ff; border:1px solid #3b47a6; padding:10px 14px; border-radius:999px; font-weight:600; font-size:13px;
+      cursor:pointer; transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow:0 8px 30px rgba(0,20,80,.2);
+    }
+    .chip.active, .chip:hover{ transform:translateY(-1px); background:#0e214c }
+
+    /* ======= Grid ======= */
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(6, 1fr);
+    }
+    @media (max-width:1100px){ .grid{grid-template-columns:repeat(5,1fr)} }
+    @media (max-width:900px){ .grid{grid-template-columns:repeat(4,1fr)} }
+    @media (max-width:720px){ .grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:520px){ .grid{grid-template-columns:repeat(2,1fr)} }
+
+    .card{
+      position:relative; overflow:hidden; border-radius:16px; border:1px solid #2a315d;
+      background:linear-gradient(135deg, #141c3c, #0c1228); box-shadow:0 10px 30px rgba(0,0,0,.35);
+      transition:transform .2s ease, border-color .2s ease;
+    }
+    .card:hover{ transform:translateY(-2px); border-color:#4957d6 }
+    .thumb{
+      aspect-ratio:1/1; width:100%; object-fit:cover; display:block;
+    }
+    .meta{ padding:10px 12px 12px }
+    .title{ font-weight:700; font-size:14px; line-height:1.2 }
+    .subtitle{ font-size:12px; color:var(--muted); margin-top:4px }
+    .footer{
+      display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px
+    }
+    .price{ font-weight:700 }
+    .btn{
+      display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:10px; font-weight:700; font-size:13px;
+      color:#0e1431; background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:1px solid #6c72ff55; cursor:pointer
+    }
+    .badge{
+      position:absolute; top:10px; left:10px; background:#0e214c; border:1px solid #3b47a6; color:#cfd6ff;
+      padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700
+    }
+    .more{ display:flex; justify-content:flex-end; margin:16px 2px 0 }
+    .link{
+      color:#cfd6ff; text-decoration:none; border-bottom:1px solid #3b47a6; font-weight:600
+    }
+
+    /* Section wrapper */
+    .section{
+      margin-top:10px; padding:1px; border-radius:calc(var(--radius) + 4px);
+      background:linear-gradient(180deg, #1b2250, #0e1431);
+      border:1px solid #2b356d; box-shadow:var(--shadow);
+    }
+    .section-inner{ padding:16px }
+    .section h2{ margin:0 0 12px; font-size:18px }
+  </style>
+</head>
+<body>
+  <!-- App Bar -->
+  <div class="appbar">
+    <div class="appbar-inner">
+      <div class="back" aria-label="Kembali"><i class="ri-arrow-left-s-line"></i></div>
+      <div class="brand">Powered by Okegaming</div>
+      <div class="spacer"></div>
+      <div class="home" aria-label="Beranda"><i class="ri-home-5-line"></i></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Banner -->
+    <div class="banner">
+      <h1>Skin Gusion Alucard Lesley SEKARANG!</h1>
+      <p>Top up Mobile Legends makin mudah — pilih game favoritmu.</p>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search" role="search">
+        <i class="ri-search-line" aria-hidden="true"></i>
+        <input type="text" placeholder="Cari game di sini..." id="q">
+      </div>
+      <div class="viewbtn" aria-label="Tampilan">
+        <button title="List"><i class="ri-menu-line"></i></button>
+        <button title="Grid"><i class="ri-grid-fill"></i></button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist" aria-label="Kategori">
+      <button class="chip active" role="tab">Lagi Populer</button>
+      <button class="chip" role="tab">Baru Rilis</button>
+      <button class="chip" role="tab">Topup Langsung</button>
+      <button class="chip" role="tab">Voucher</button>
+    </div>
+
+    <!-- GRID: Lagi Populer -->
+    <section class="section" aria-label="Lagi Populer">
+      <div class="section-inner">
+        <h2>Lagi Populer</h2>
+
+        <div class="grid" id="grid">
+          <!-- Item -->
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop" alt="Arena Breakout">
+            <span class="badge">Garena</span>
+            <div class="meta">
+              <div class="title">Arena Breakout</div>
+              <div class="subtitle">Shooter • Android</div>
+              <div class="footer">
+                <div class="price">Rp5.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1523035274455-b2e562c86f2a?q=80&w=600&auto=format&fit=crop" alt="Call of Duty Mobile">
+            <span class="badge">CODM</span>
+            <div class="meta">
+              <div class="title">Call of Duty Mobile</div>
+              <div class="subtitle">Action • Android/iOS</div>
+              <div class="footer">
+                <div class="price">Rp10.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1579165466741-7f35e4755668?q=80&w=600&auto=format&fit=crop" alt="Free Fire">
+            <span class="badge">FF</span>
+            <div class="meta">
+              <div class="title">Free Fire</div>
+              <div class="subtitle">Battle Royale</div>
+              <div class="footer">
+                <div class="price">Rp3.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=600&auto=format&fit=crop" alt="Genshin Impact">
+            <span class="badge">miHoYo</span>
+            <div class="meta">
+              <div class="title">Genshin Impact</div>
+              <div class="subtitle">RPG • Cross-platform</div>
+              <div class="footer">
+                <div class="price">Rp15.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=600&auto=format&fit=crop" alt="Honor of Kings">
+            <span class="badge">HoK</span>
+            <div class="meta">
+              <div class="title">Honor of Kings</div>
+              <div class="subtitle">MOBA • Global</div>
+              <div class="footer">
+                <div class="price">Rp8.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1588600878108-578307a3cc9b?q=80&w=600&auto=format&fit=crop" alt="Honkai Star Rail">
+            <span class="badge">HSR</span>
+            <div class="meta">
+              <div class="title">Honkai Star Rail</div>
+              <div class="subtitle">RPG • Turn-based</div>
+              <div class="footer">
+                <div class="price">Rp12.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1606117331085-5760e3b58520?q=80&w=600&auto=format&fit=crop" alt="League of Legends: Wild Rift">
+            <span class="badge">Riot</span>
+            <div class="meta">
+              <div class="title">League of Legends: Wild Rift</div>
+              <div class="subtitle">MOBA • Mobile</div>
+              <div class="footer">
+                <div class="price">Rp9.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="thumb" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Mobile Legends">
+            <span class="badge">MLBB</span>
+            <div class="meta">
+              <div class="title">Mobile Legends</div>
+              <div class="subtitle">MOBA • Android/iOS</div>
+              <div class="footer">
+                <div class="price">Rp2.000+</div>
+                <a class="btn" href="#"><i class="ri-flashlight-fill"></i>Top Up</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="more">
+          <a class="link" href="#">Lihat Semua</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Filter sederhana berdasarkan input pencarian
+    const q = document.getElementById('q');
+    q.addEventListener('input', () => {
+      const term = q.value.toLowerCase().trim();
+      document.querySelectorAll('.card .title').forEach(t => {
+        const card = t.closest('.card');
+        card.style.display = t.textContent.toLowerCase().includes(term) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
