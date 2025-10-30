@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Okegaming — Web Store</title>
+  <title>Apk Premium Store</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
   <style>
@@ -15,145 +15,191 @@
       --text:#e8ecff;
       --muted:#a6b0d6;
       --brand:#7a6cff;
+      --brand-2:#00e7ff;
       --brand-hover:#00e7ff;
-      --radius:12px;
-      --shadow:0 4px 15px rgba(0,0,0,.3);
+      --radius:14px;
+      --shadow:0 12px 30px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:"Poppins",sans-serif;
-      color:var(--text);
-      background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
-    }
+    body{margin:0;font-family:"Poppins",sans-serif;color:var(--text);
+      background:radial-gradient(1200px 600px at -10% 0%, #18235a 0%, transparent 50%),
+                 radial-gradient(900px 500px at 120% -10%, #0e385a 0%, transparent 50%),
+                 linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);}
+
+    /* ====== Header: glossy + neon underline ====== */
+    .appbar-wrap{position:sticky;top:0;z-index:1000;backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(13,19,40,.85) 0%, rgba(8,12,28,.75) 100%);
+      border-bottom:1px solid #253066; box-shadow:0 10px 40px rgba(0,0,0,.35);}
     .appbar{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 16px;
-      background:var(--brand);
-      color:#fff;
-      position:sticky;top:0;z-index:10;
+      max-width:980px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 16px;position:relative;
     }
-    .appbar button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
-    .banner img{width:100%;display:block;border-radius:8px;margin-top:8px}
-    .container{max-width:960px;margin:auto;padding:0 16px 40px}
-    .search-bar{display:flex;align-items:center;background:#0e1431;border:1px solid var(--border);border-radius:999px;padding:8px 12px;margin:12px 0}
+    .appbar:after{
+      content:""; position:absolute; inset:auto 16px -2px 16px; height:2px;
+      background:linear-gradient(90deg, transparent, var(--brand), var(--brand-2), transparent); border-radius:999px; filter:blur(.6px);
+    }
+    .iconbtn{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid #2b356d;background:#0e1431;cursor:pointer;color:#cfd6ff}
+    .title{font-weight:800;letter-spacing:.3px;font-size:16px;flex:1;text-align:center}
+    .right{display:flex;gap:8px}
+
+    .container{max-width:980px;margin:auto;padding:10px 16px 48px}
+    .banner img{width:100%;display:block;border-radius:16px;margin:12px 0;box-shadow:var(--shadow);border:1px solid #243066}
+
+    /* Search */
+    .search-bar{display:flex;align-items:center;background:#0e1431;border:1px solid var(--border);border-radius:999px;padding:10px 14px;margin:12px 0;box-shadow:0 10px 30px rgba(0,20,80,.2)}
     .search-bar input{flex:1;border:none;outline:none;padding:6px 8px;background:transparent;color:var(--text);font-size:14px}
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-    .tab{padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:#0e1431;color:var(--text);cursor:pointer;font-size:13px;font-weight:500;transition:.2s}
-    .tab.active,.tab:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .toolbar h2{font-size:16px;margin:0;font-weight:600}
-    .toolbar button{background:#0e1431;border:1px solid var(--border);border-radius:8px;width:40px;height:40px;font-size:20px;cursor:pointer;color:var(--text)}
-    .toolbar button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+    .search-bar i{color:#9fb0ff;margin-right:8px}
+
+    /* Tabs */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+    .tab{padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:#0e1431;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;transition:.2s;box-shadow:0 8px 30px rgba(0,20,80,.2)}
+    .tab.active,.tab:hover{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1020;border-color:#6c72ff55}
+
+    /* Toolbar (title + view switch) */
+    .toolbar{display:flex;justify-content:space-between;align-items:center;margin:4px 0 12px}
+    .toolbar h2{font-size:18px;margin:0;font-weight:700}
+    .view{display:flex;gap:10px}
+    .view button{background:#0e1431;border:1px solid var(--border);border-radius:12px;width:44px;height:44px;font-size:20px;cursor:pointer;color:#cfd6ff}
+    .view button.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1020;border-color:#6c72ff55}
+
+    /* Grid */
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
     @media(max-width:768px){.grid{grid-template-columns:repeat(3,1fr)}}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s}
-    .card:hover{transform:translateY(-3px)}
+    .card{background:linear-gradient(135deg,#141c3c,#0c1228);border:1px solid #2a315d;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s,border-color .2s}
+    .card:hover{transform:translateY(-3px);border-color:#4957d6}
     .card img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
-    .card-body{padding:10px}
-    .card-title{font-size:14px;font-weight:600;margin:0 0 4px}
-    .card-sub{font-size:12px;color:var(--muted);margin:0 0 8px}
-    .card-footer{display:flex;justify-content:space-between;align-items:center}
-    .btn{background:var(--brand);border:none;color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
-    .btn:hover{background:var(--brand-hover)}
-    .price{font-weight:700;font-size:13px}
+    .card-body{padding:12px}
+    .card-title{font-size:14px;font-weight:700;margin:0 0 8px}
+    .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));border:none;color:#0b1020;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;text-decoration:none;display:inline-block;border:1px solid #6c72ff55}
+    .btn:hover{filter:brightness(1.1)}
+    /* List view */
     .list .grid{grid-template-columns:1fr}
     .list .card{display:flex;align-items:center;gap:12px}
-    .list .card img{width:90px;height:90px;border-radius:8px;flex-shrink:0}
+    .list .card img{width:90px;height:90px;border-radius:10px;flex-shrink:0}
     .list .card-body{flex:1;padding:0}
   </style>
 </head>
 <body>
+
+<!-- Fancy Header -->
+<div class="appbar-wrap">
   <div class="appbar">
-    <button onclick="history.back()"><i class="ri-arrow-left-s-line"></i></button>
-    <div class="title">Powered by Okegaming</div>
-    <button onclick="location.reload()"><i class="ri-home-5-line"></i></button>
+    <!-- Tombol kembali ke luar folder -->
+    <div class="iconbtn" onclick="window.location.href='../index.html'" title="Kembali">
+      <i class="ri-arrow-left-s-line"></i>
+    </div>
+
+    <div class="title">Powered by Xiao-Store</div>
+
+    <!-- Tombol beranda di folder ini -->
+    <div class="right">
+      <div class="iconbtn" onclick="window.location.href='../index.html'" title="Beranda">
+        <i class="ri-home-5-line"></i>
+      </div>
+    </div>
   </div>
+</div>
+
   <div class="container">
-    <div class="banner"><img src="https://cdn1.codashop.com/S/content/common/images/promotion_banner_MLBB.jpg" alt="Banner"></div>
-    <div class="search-bar"><i class="ri-search-line"></i><input type="text" id="search" placeholder="Cari game di sini..."></div>
+    <div class="banner"><img src="https://files.catbox.moe/fs7ib3.png" alt="Banner"></div>
+    <div class="search-bar"><i class="ri-search-line"></i><input type="text" id="search" placeholder="Cari aplikasi di sini..."></div>
+
     <div class="tabs">
       <div class="tab active" data-category="all">All</div>
-      <div class="tab" data-category="game">Game</div>
-      <div class="tab" data-category="apk">Apk Prem</div>
+      <div class="tab" data-category="canva">Canva</div>
+      <div class="tab" data-category="capcut">CapCut</div>
+      <div class="tab" data-category="alight">Alight Motion</div>
+      <div class="tab" data-category="chatgpt">ChatGPT</div>
+      <div class="tab" data-category="gemini">Gemini</div>
+      <div class="tab" data-category="viu">Viu</div>
     </div>
+
     <div class="toolbar">
-      <h2 id="categoryTitle">Semua Produk</h2>
-      <div>
+      <h2 id="categoryTitle">Semua Aplikasi</h2>
+      <div class="view">
         <button id="listBtn"><i class="ri-menu-line"></i></button>
         <button id="gridBtn" class="active"><i class="ri-grid-fill"></i></button>
       </div>
     </div>
-    <div class="grid" id="gameGrid"></div>
+
+    <div class="grid" id="grid"></div>
   </div>
+
   <script>
-    const products = {
-      game: [
-        {title:'Free Fire',sub:'Battle Royale',price:'Rp3.000+',img:'https://images.unsplash.com/photo-1579165466741-7f35e4755668?q=80&w=600&auto=format&fit=crop'},
-        {title:'Mobile Legends',sub:'MOBA • Android/iOS',price:'Rp2.000+',img:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop'},
-        {title:'PUBG Mobile',sub:'Shooter • Android',price:'Rp8.000+',img:'https://images.unsplash.com/photo-1606117331085-5760e3b58520?q=80&w=600&auto=format&fit=crop'},
-        {title:'Genshin Impact',sub:'RPG • Cross-platform',price:'Rp15.000+',img:'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=600&auto=format&fit=crop'},
-        {title:'Call of Duty Mobile',sub:'Action • Android/iOS',price:'Rp10.000+',img:'https://images.unsplash.com/photo-1523035274455-b2e562c86f2a?q=80&w=600&auto=format&fit=crop'},
-        {title:'Point Blank',sub:'FPS • PC',price:'Rp5.000+',img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop'}
+    // ====== DATA (pastikan setiap item valid) ======
+    const data = {
+      canva: [
+        {title:'Canva Member', img:'https://pomf2.lain.la/f/e3ffcl9h.jpeg', link:'https://wa.me/6285213736323?text=buy+canva1b+1'},
+        {title:'Canva Admin',  img:'https://pomf2.lain.la/f/e3ffcl9h.jpeg', link:'https://wa.me/6285213736323?text=buy+cadmin+1'},
+        {title:'Canva Pro',    img:'https://pomf2.lain.la/f/e3ffcl9h.jpeg', link:'https://wa.me/6285213736323?text=buy+cowner+1'}
       ],
-      apk: [
-        {title:'Canva Premium',sub:'Desain • Android/iOS',price:'Rp20.000+',img:'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format&fit=crop'},
-        {title:'Netflix Premium',sub:'Streaming • Multi Platform',price:'Rp50.000+',img:'https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?q=80&w=600&auto=format&fit=crop'},
-        {title:'Spotify Premium',sub:'Musik • Android/iOS',price:'Rp25.000+',img:'https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?q=80&w=600&auto=format&fit=crop'},
-        {title:'ChatGPT Plus',sub:'AI Assistant • Web',price:'Rp300.000+',img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600&auto=format&fit=crop'}
+      capcut: [
+        {title:'CapCut Private ', img:'https://files.catbox.moe/jfy2do.jpg?q=80&w=600&auto=format&fit=crop', link:'https://wa.me/6285213736323?text=buy+ccpriv+1'},
+        {title:'CapCut Pro Sharing',img:'https://files.catbox.moe/jfy2do.jpg?q=80&w=600&auto=format&fit=crop', link:'https://wa.me/6285213736323?text=buy+ccshar+1'}
+      ],
+      alight: [
+        {title:'AM 1Y Sharing', img:'https://pomf2.lain.la/f/tnshlmg2.jpeg', link:'https://wa.me/6285213736323?text=buy+am1ys+1'},
+        {title:'AM 1Y Private', img:'https://pomf2.lain.la/f/tnshlmg2.jpeg', link:'https://wa.me/6285213736323?text=buy+am1yp+1'}
+      ],
+      chatgpt: [
+        {title:'ChatGPT 1 Bulan Invite', img:'https://pomf2.lain.la/f/cxuy3w5w.jpeg', link:'https://wa.me/6285213736323?text=buy+chatgpt+1'},
+        {title:'ChatGPT 1 Bulan Head',   img:'https://pomf2.lain.la/f/cxuy3w5w.jpeg', link:'https://wa.me/6285213736323?text=buy+chatgpth+1'}
+      ],
+      gemini: [
+        {title:'Gemini 1 Bulan', img:'https://files.catbox.moe/slif86.jpeg?q=80&w=600&auto=format&fit=crop', link:'https://wa.me/6285213736323?text=buy+gemini+1'}
+      ],
+      viu: [
+        {title:'Viu 1 Tahun', img:'https://files.catbox.moe/802vqs.png?q=80&w=600&auto=format&fit=crop', link:'https://wa.me/6285213736323?text=but+viu1t+1'}
       ]
     };
 
-    const grid=document.getElementById('gameGrid');
-    const tabs=document.querySelectorAll('.tab');
-    const title=document.getElementById('categoryTitle');
+    const grid = document.getElementById('grid');
+    const tabs = document.querySelectorAll('.tab');
+    const title = document.getElementById('categoryTitle');
+    const prettyNames = {all:'Semua Aplikasi', canva:'Canva', capcut:'CapCut', alight:'Alight Motion', chatgpt:'ChatGPT', gemini:'Gemini', viu:'Viu'};
 
     function render(category){
       grid.innerHTML='';
       let items=[];
-      if(category==='all'){items=[...products.game,...products.apk];}
-      else{items=products[category];}
-      items.forEach(p=>{
-        const card=`<div class="card">
-          <img src="${p.img}" alt="${p.title}">
+      if(category==='all'){Object.values(data).forEach(v=>items.push(...v));}
+      else{items = data[category] || [];}
+      items.forEach(app=>{
+        const card=`<div class="card" data-title="${app.title.toLowerCase()}">
+          <img src="${app.img}" alt="${app.title}">
           <div class="card-body">
-            <div class="card-title">${p.title}</div>
-            <div class="card-sub">${p.sub}</div>
-            <div class="card-footer">
-              <div class="price">${p.price}</div>
-              <button class="btn">${category==='apk'?'Beli':'Top Up'}</button>
-            </div>
+            <div class="card-title">${app.title}</div>
+            <a class="btn" href="${app.link}" target="_blank">Beli</a>
           </div>
         </div>`;
-        grid.insertAdjacentHTML('beforeend',card);
+        grid.insertAdjacentHTML('beforeend', card);
       });
-      if(category==='all'){title.textContent='Semua Produk';}
-      else if(category==='apk'){title.textContent='Aplikasi Premium';}
-      else{title.textContent='Game Populer';}
+      title.textContent = category==='all' ? 'Semua Aplikasi' : (prettyNames[category] || 'Produk');
+      applySearch();
     }
 
-    tabs.forEach(t=>{
-      t.addEventListener('click',()=>{
-        tabs.forEach(x=>x.classList.remove('active'));
-        t.classList.add('active');
-        render(t.dataset.category);
-      });
-    });
+    tabs.forEach(t=>t.addEventListener('click',()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      render(t.dataset.category);
+    }));
 
-    render('all');
-
+    // Grid/List toggle
     const listBtn=document.getElementById('listBtn');
     const gridBtn=document.getElementById('gridBtn');
     listBtn.onclick=()=>{grid.parentElement.classList.add('list');listBtn.classList.add('active');gridBtn.classList.remove('active');}
     gridBtn.onclick=()=>{grid.parentElement.classList.remove('list');gridBtn.classList.add('active');listBtn.classList.remove('active');}
 
+    // Search
     const search=document.getElementById('search');
-    search.addEventListener('input',()=>{
-      const val=search.value.toLowerCase();
+    function applySearch(){
+      const val=(search.value||'').toLowerCase();
       document.querySelectorAll('.card').forEach(c=>{
-        c.style.display=c.textContent.toLowerCase().includes(val)?'':'none';
+        c.style.display = c.dataset.title.includes(val) ? '' : 'none';
       });
-    });
+    }
+    search.addEventListener('input',applySearch);
+
+    // Initial render
+    render('all');
   </script>
 </body>
 </html>
